@@ -19,7 +19,8 @@ def question1(liste):
       if (l[i] != 0):  cpt += 1
     listeProba.append(cpt / 50)
   return listeProba'''
-
+# ici on créer une fonction qui prend en argument deux candidats et qui va renvoyer True si c'est le premier qui gagne 
+#x gagne par rapport à y si il est devant plus de la moitié du temps
 def condorcet(x,y):
   testCond=0
   for v in listepreference:
@@ -29,7 +30,8 @@ def condorcet(x,y):
     return True
   else : return False
 
-
+#une fonciton qui nous donne le vainqueur par condorcet
+#un candidat est vainqueur par condorcet si il est gagant par rapport à tous les autres
 def winCondorcet():
   for cand1 in A:
     cpt = 0
@@ -42,6 +44,7 @@ def winCondorcet():
           return cand1
   return 0
 
+#On calcul le score de x pour copeland
 def copelandScore(x):
   score1 = 0
   score2 = 0
@@ -51,7 +54,7 @@ def copelandScore(x):
       elif condorcet(y,x) : score2+=1
   return score1 - score2
 
-
+#On appelle notre fonction de calcul du score et on trouve le gagnant par copeland, c'est celui avec le meilleur score
 def copelandResult():
   result=[]
   for cand in A:
@@ -60,13 +63,14 @@ def copelandResult():
   if (result.count(maximum)!=1) : return 0
   return A[result.index(maximum)]
 
-
+#On retourne le score de borda du candidat passé en parametre de la fonction
 def bordaScore(x):
   score=0
   for v in listepreference :
     score+=v.index(x)+1
   return score
 
+#On procède de la même façon que pour copeland pour retourner le vainqueur par borda
 def bordaResult():
   result = []
   for cand in A:
