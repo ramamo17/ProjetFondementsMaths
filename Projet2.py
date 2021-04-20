@@ -35,11 +35,11 @@ def winCondorcet():
     cpt = 0
     for cand2 in A:
       if (cand1!=cand2):
-        if cpt == nombrevotant :
-          return cand1
         if (condorcet(cand1,cand2) != True) :
           break
         cpt+=1
+        if cpt ==len(A)-1 :
+          return cand1
   return 0
 
 def copelandScore(x):
