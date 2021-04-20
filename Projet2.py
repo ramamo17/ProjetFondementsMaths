@@ -79,6 +79,7 @@ def bordaResult():
   if (result.count(minimum) != 1): return 0
   return A[result.index(minimum)]
 
+#fonction qui retourne 
 def initialisation(nombrecandidat, nombrevotant):
   V = []
   compteurvotant=1
@@ -92,7 +93,6 @@ def initialisation(nombrecandidat, nombrevotant):
     V.append("v" + str(compteurvotant))
     compteurvotant += 1
 
-  #vote des candidats
   for votant in V:
     listecandidataleatoire = []
     listebis = []
