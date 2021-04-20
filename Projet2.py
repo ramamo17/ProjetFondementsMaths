@@ -92,7 +92,7 @@ def initialisation(nombrecandidat, nombrevotant):
   while compteurvotant <= nombrevotant:
     V.append("v" + str(compteurvotant))
     compteurvotant += 1
-
+  #on génère les votes 
   for votant in V:
     listecandidataleatoire = []
     listebis = []
