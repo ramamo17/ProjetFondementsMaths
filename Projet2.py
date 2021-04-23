@@ -148,7 +148,7 @@ for nombrevotant in range(3,20, 2):
   listeCondorcetTMP = []
   listeCopelandTMP = []
   listeBordaTMP = []
-  for i in range(50):
+  for i in range(50): #????
     listepreference = []
     A = initialisation(5, nombrevotant)
     #print("DEBUT BOUCLE")
