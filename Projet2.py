@@ -1,26 +1,46 @@
 import string
 import random
+import numpy as np
+import time
+from datetime import timedelta
+import matplotlib.pyplot as plt
 
 
 def question1(liste):
   listeProba=[]
-  for i in range(9):
+  cpt_nombrevotants = 3
+  for l in liste:
     cpt = 0
-    for l in liste:
+    tp1 = time.time()
+    for i in range(50):
        if(l[i]==0) :  cpt+=1
     listeProba.append(cpt/50)
+    tp2 = time.time()
+    print("nombre de votants : ", cpt_nombrevotants, ",temps :", tp2 - tp1)
+    cpt_nombrevotants +=2
   return listeProba
 
-'''def question2(liste):
-  listeProba = []
-  for i in range(9):
-    cpt = 0
-    for l in liste:
-      if (l[i] != 0):  cpt += 1
-    listeProba.append(cpt / 50)
-  return listeProba'''
-# ici on créer une fonction qui prend en argument deux candidats et qui va renvoyer True si c'est le premier qui gagne 
-#x gagne par rapport à y si il est devant plus de la moitié du temps
+def question2(listeTest, listeCond):
+  listeProba1 = [0,0,0,0,0,0,0,0,0]
+  cpt = 0
+  cpt_nombrevotants = 3
+  for l in listeCond:
+    tp1 = time.time()
+    cptWin = 0
+    for i in range(50):
+
+      if cpt>9 : break
+      if (l[i] != 0):
+        cptWin += 1
+        if(l[i]==listeTest[cpt][i]) :
+          listeProba1[cpt]=listeProba1[cpt]+1
+    if(cptWin!=0) : listeProba1[cpt]= round(listeProba1[cpt]/cptWin, 3)
+    tp2 = time.time()
+    print("nombre de votants : ", cpt_nombrevotants, ",temps :", tp2 - tp1)
+    cpt_nombrevotants += 2
+    cpt += 1
+  return listeProba1
+
 def condorcet(x,y):
   testCond=0
   for v in listepreference:
@@ -30,8 +50,7 @@ def condorcet(x,y):
     return True
   else : return False
 
-#une fonciton qui nous donne le vainqueur par condorcet
-#un candidat est vainqueur par condorcet si il est gagant par rapport à tous les autres
+
 def winCondorcet():
   for cand1 in A:
     cpt = 0
@@ -44,7 +63,6 @@ def winCondorcet():
           return cand1
   return 0
 
-#On calcul le score de x pour copeland
 def copelandScore(x):
   score1 = 0
   score2 = 0
@@ -54,7 +72,7 @@ def copelandScore(x):
       elif condorcet(y,x) : score2+=1
   return score1 - score2
 
-#On appelle notre fonction de calcul du score et on trouve le gagnant par copeland, c'est celui avec le meilleur score
+
 def copelandResult():
   result=[]
   for cand in A:
@@ -63,14 +81,13 @@ def copelandResult():
   if (result.count(maximum)!=1) : return 0
   return A[result.index(maximum)]
 
-#On retourne le score de borda du candidat passé en parametre de la fonction
+
 def bordaScore(x):
   score=0
   for v in listepreference :
     score+=v.index(x)+1
   return score
 
-#On procède de la même façon que pour copeland pour retourner le vainqueur par borda
 def bordaResult():
   result = []
   for cand in A:
@@ -79,7 +96,6 @@ def bordaResult():
   if (result.count(minimum) != 1): return 0
   return A[result.index(minimum)]
 
-#fonction qui retourne 
 def initialisation(nombrecandidat, nombrevotant):
   V = []
   compteurvotant=1
@@ -92,12 +108,13 @@ def initialisation(nombrecandidat, nombrevotant):
   while compteurvotant <= nombrevotant:
     V.append("v" + str(compteurvotant))
     compteurvotant += 1
-  #on génère les votes 
+
+  #vote des candidats
   for votant in V:
     listecandidataleatoire = []
     listebis = []
-    for element in A:
-      listebis.append(element)
+    for candidat in A:
+      listebis.append(candidat)
     while (len(listebis) != 0):
       x = random.choice(listebis)
       listecandidataleatoire.append(x)
@@ -110,15 +127,15 @@ A=[]
 listeCondorcet = []
 listeCopeland = []
 listeBorda = []
+liste_nombre_votants = np.array([3, 5, 7, 9, 11, 13, 15, 17, 19])
 
-
-for i in range(50):
-  #nb candidat fixe et nb votant qui varie
-  print("nb candidat fixe et nb votant qui varie")
-  listeCondorcetTMP=[]
-  listeCopelandTMP=[]
-  listeBordaTMP=[]
-  for nombrevotant in range(3,20, 2):
+#nb candidat fixe et nb votant qui varie
+print("nb candidat fixe et nb votant qui varie")
+for nombrevotant in range(3,20, 2):
+  listeCondorcetTMP = []
+  listeCopelandTMP = []
+  listeBordaTMP = []
+  for i in range(50):
     listepreference = []
     A = initialisation(5, nombrevotant)
     #print("DEBUT BOUCLE")
@@ -135,18 +152,35 @@ for i in range(50):
   listeBorda.append(listeBordaTMP)
 
 
-  #nb votant fixe et nb candidat qui varie
-  '''print("\nnb votant fixe et nb candidat qui varie")
-  for nombrecandidat in range(2,8):
+#nb votant fixe et nb candidat qui varie
+'''print("\nnb votant fixe et nb candidat qui varie")
+for nombrecandidat in range(2,8):
+  listeCondorcetTMP = []
+  listeCopelandTMP = []
+  listeBordaTMP = []
+  for i in range(50):
     initialisation(nombrecandidat, 19)
     print("DEBUT BOUCLE")
     #print(listepreference)
     print("5 candidats, ", nombrevotant, "votants")
     print("Condorcet :", winCondorcet())
     print("Copeland :", copelandResult())
-    print("Borda :", bordaResult())'''
+    print("Borda :", bordaResult())
   print("CONDORCEEEEEEET", listeCondorcet)
-  print(len(listeCondorcet))
   print("\n\nCOPELAAAAAAAAAND", listeCopeland)
-  print("\n\nBORDAAAAAAAAAAAAAAA", listeBorda)
-  print(question1())
+  print("\n\nBORDAAAAAAAAAAAAAAA", listeBorda)'''
+
+
+print("CONDORCEEEEEEET", listeCondorcet)
+print("\n\nCOPELAAAAAAAAAND", listeCopeland)
+print("\n\nBORDAAAAAAAAAAAAAAA", listeBorda)
+resQ1 = question1(listeCondorcet)
+resQ2 = question2(listeBorda, listeCondorcet)
+resQ3 = question2(listeCopeland, listeCondorcet)
+print("\n Question 1 : ", resQ1)
+plt.plot(liste_nombre_votants, resQ1, c="g")
+print("\n Question 2 : ", resQ2)
+plt.plot(liste_nombre_votants, resQ2, c="b")
+print("\n Question 3 : ", resQ3)
+plt.plot(liste_nombre_votants, resQ3, c="r")
+plt.show()
