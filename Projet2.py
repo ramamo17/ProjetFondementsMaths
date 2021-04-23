@@ -140,7 +140,7 @@ A=[]
 listeCondorcet = []
 listeCopeland = []
 listeBorda = []
-liste_nombre_votants = np.array([3, 5, 7, 9, 11, 13, 15, 17, 19])
+liste_nombre_votants = np.array([3, 5, 7, 9, 11, 13, 15, 17, 19]) #????????????????????
 
 #nb candidat fixe et nb votant qui varie
 print("nb candidat fixe et nb votant qui varie")
@@ -148,7 +148,7 @@ for nombrevotant in range(3,20, 2):
   listeCondorcetTMP = []
   listeCopelandTMP = []
   listeBordaTMP = []
-  for i in range(50): #????
+  for i in range(50): #??????????????????????????
     listepreference = []
     A = initialisation(5, nombrevotant)
     #print("DEBUT BOUCLE")
