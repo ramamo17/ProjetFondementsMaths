@@ -41,6 +41,8 @@ def question2(listeTest, listeCond):
     cpt += 1
   return listeProba1
 
+
+#donne True si x bat y par condorcet
 def condorcet(x,y):
   testCond=0
   for v in listepreference:
@@ -50,9 +52,9 @@ def condorcet(x,y):
     return True
   else : return False
 
-
+#Donnne le candidat qui gagne par condorcet par rapport à tous les autres ou alors 0 si il y a pas de vainqueur
 def winCondorcet():
-  for cand1 in A:
+  for cand1 in A:  #A est la liste des candidats
     cpt = 0
     for cand2 in A:
       if (cand1!=cand2):
@@ -63,6 +65,7 @@ def winCondorcet():
           return cand1
   return 0
 
+#donne le scorde de copeland de x passé en paramètre
 def copelandScore(x):
   score1 = 0
   score2 = 0
@@ -72,7 +75,9 @@ def copelandScore(x):
       elif condorcet(y,x) : score2+=1
   return score1 - score2
 
-
+#Donne le candidat vainqueur pas copeland ou 0 si il n'y en a pas que 1
+#On a une liste result ou on va append les score de borda dans l'ordre des candidast dans A
+#puis on regarde à quel index on trouve le score le plus élevé et on voit à qui ca correspond dans A
 def copelandResult():
   result=[]
   for cand in A:
@@ -81,13 +86,15 @@ def copelandResult():
   if (result.count(maximum)!=1) : return 0
   return A[result.index(maximum)]
 
-
+#donne le scorde de borda d'un candidat x passé en parametre
 def bordaScore(x):
   score=0
   for v in listepreference :
     score+=v.index(x)+1
   return score
 
+
+#tout pareil que pour copeland result
 def bordaResult():
   result = []
   for cand in A:
@@ -96,6 +103,12 @@ def bordaResult():
   if (result.count(minimum) != 1): return 0
   return A[result.index(minimum)]
 
+
+#initialisation prend en parametre le nombre de candidat et de votants 
+#creer la liste des candidats A constituee de lettres minuscules 
+# et la liste des votants V représenté par des nombres convertis en str
+# ensuite on va creer des bulletins de votes listecandidataleatoire
+# on va les stocker dans listepreference
 def initialisation(nombrecandidat, nombrevotant):
   V = []
   compteurvotant=1
